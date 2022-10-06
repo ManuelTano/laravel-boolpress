@@ -65,7 +65,7 @@
     </div>
     <div class="col-1 mt-4">
         <img class="img-fluid" src="{{ $post->image ? asset('storage/'.$post->image) : 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Placeholder_view_vector.svg/681px-Placeholder_view_vector.svg.png'}}"
-         alt="{{ $post->image ? $post->title : 'placeholder'}}" />
+         alt="{{ $post->image ? $post->title : 'placeholder'}}" id="preview"/>
     </div>
 </div>
 <hr />
