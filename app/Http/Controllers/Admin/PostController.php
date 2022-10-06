@@ -49,7 +49,7 @@ class PostController extends Controller
         $request->validate ([
             'title' => 'required|string|min:5|max:50|unique:posts',
             'content' => 'required|string',
-            'image' => 'nullable|url',
+            'image' => 'nullable|image|mimes:jpeg,jpg,png',
             'category_id' => 'nullable | exists:categories,id',
             'tags' => 'nullable|exists:tags,id',
             ], [
@@ -57,7 +57,8 @@ class PostController extends Controller
                 'title.min' => 'Il titolo deve avere almeno :min caratteri',
                 'title.max' => 'Il titolo deve avere almeno :max caratteri',
                 'title.unique' => "Esiste già un post dal titolo $request->title",
-                'image.url' => 'Url dell\'immagine non valido',
+                'image.image '=> 'Il file caricato non è di tipo immagine',
+                'image.mimes' => 'Le immagini ammesse sono solo in formato .jpeg .jpg o .png',
                 'category_id.exists' => 'Non esiste una categoria associabile',
                 'tags.exists' => "Tag indicati non validi",
             ]);
@@ -66,9 +67,20 @@ class PostController extends Controller
             $post = new Post();
             $post->fill($data);
             $post->slug = Str::slug($post->title, '-');
+
+            if(array_key_exists('image', $data)) {
+                
+                $image_url = Storage::put('posts', $data['image']);
+                // dentro la variabile image_url mi troverò l'indirizzo dell'immagine salvata
+                $post->image = $image_url // lo salvo nel db
+            };
+
             $post->save();
+
             if (!array_key_exists('tags', $data)) $post->tags()->detach();
+
             else $post->tags()->sync($data['tags']);
+
             return redirect()->route('admin.posts.show', $post)->with('message', "Post creato con successo")->with('type', "success");
     }
 

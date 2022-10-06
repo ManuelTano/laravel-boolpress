@@ -7,10 +7,10 @@
 @endif
 
 @if ($post->exists)
-    <form action="{{ route('admin.posts.update', $post) }}" method="POST" novalidate>
+    <form action="{{ route('admin.posts.update', $post) }}" method="POST" novalidate enctype="multipart/form-data">
         @method('PUT')
     @else
-        <form action="{{ route('admin.posts.store') }}" method="POST" novalidate>
+        <form action="{{ route('admin.posts.store') }}" method="POST" novalidate enctype="multipart/form-data">
 @endif
 
 @csrf
@@ -60,8 +60,7 @@
     <div class="col-11">
         <div class="form-group">
             <label for="image">Immagine</label>
-            <input type="url" class="form-control" id="image" name="image"
-                value="{{ old('image', $post->image) }}">
+            <input type="file" class="form-control" id="image" name="image">
         </div>
     </div>
     <div class="col-1 mt-4">
