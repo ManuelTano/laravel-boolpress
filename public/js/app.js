@@ -37379,11 +37379,19 @@ deleteForms.forEach(function (form) {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-var placeholder = "stringa https presa da google immagini";
+var placeholder = "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Placeholder_view_vector.svg/681px-Placeholder_view_vector.svg.png";
 var image = document.getElementById('image');
 var preview = document.getElementById('preview');
 image.addEventListener('input', function () {
-  preview.src = image.value || placeholder;
+  if (image.files && image.files[0]) {
+    var reader = new FileReader();
+    reader.readAsDataURL(image.files[0]);
+    reader.addEventListener('load', function (event) {
+      preview.src = event.target.result;
+    });
+  } else preview.src = placeholder;
+
+  preview.setAttribute('src', placeholder);
 });
 
 /***/ }),

@@ -8,8 +8,12 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use App\Models\Category;
+use App\Mail\PostPublicationMail;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Mail;
+
 
 class PostController extends Controller
 
@@ -81,6 +85,9 @@ class PostController extends Controller
             if (!array_key_exists('tags', $data)) $post->tags()->detach();
 
             else $post->tags()->sync($data['tags']);
+                $mail = new PostPublicationMail($post);
+                $user_email = Auth::user()->email;
+                Mail::to($user_email)->send($mail);
 
             return redirect()->route('admin.posts.show', $post)->with('message', "Post creato con successo")->with('type', "success");
     }
