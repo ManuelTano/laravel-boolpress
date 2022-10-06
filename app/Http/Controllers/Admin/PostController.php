@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use App\Models\Category;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
 
@@ -72,7 +73,7 @@ class PostController extends Controller
                 
                 $image_url = Storage::put('posts', $data['image']);
                 // dentro la variabile image_url mi troverò l'indirizzo dell'immagine salvata
-                $post->image = $image_url // lo salvo nel db
+                $post->image = $image_url; // lo salvo nel db
             };
 
             $post->save();

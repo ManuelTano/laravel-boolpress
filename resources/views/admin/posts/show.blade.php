@@ -5,7 +5,7 @@
         <h1 class="my-5">{{ $post->title }}</h1>
         <div>
             @if ($post->image)
-                <img class="float-left mr-2" src="{{ $post->image }}" alt="{{ $post->slug }}">
+                <img class="float-left mr-2 img-fluid" src="{{ asset ('storage/'.$post->image)}}" alt="{{ $post->slug }}" width="250">
             @endif
             <p>
                 <strong>Categoria:</strong>
