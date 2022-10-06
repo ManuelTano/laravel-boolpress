@@ -64,8 +64,8 @@
         </div>
     </div>
     <div class="col-1 mt-4">
-        <img src="{{ $post->image ?? 'https://i1.wp.com/potafiori.com/wp-content/uploads/2020/04/placeholder.png?ssl=1' }}"
-            alt="post image preview" id="preview" class="img-fluid">
+        <img class="img-fluid" src="{{ $post->image ? asset('storage/'.$post->image) : 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Placeholder_view_vector.svg/681px-Placeholder_view_vector.svg.png'}}"
+         alt="{{ $post->image ? $post->title : 'placeholder'}}" />
     </div>
 </div>
 <hr />
